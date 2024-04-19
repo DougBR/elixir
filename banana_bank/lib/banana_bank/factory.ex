@@ -9,7 +9,7 @@ defmodule BananaBank.Factory do
       name: "Jane Smith",
       email: sequence(:email, &"email-#{&1}@example.com"),
       password: "hello123",
-      cep: "12345678"
+      cep: "39816000"
     }
   end
 end

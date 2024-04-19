@@ -35,7 +35,7 @@ defmodule BananaBankWeb.UsersControllerTest do
 
   describe "delete/2" do
     test "successfully deletes a user", %{conn: conn} do
-      %User{id: id, email: email} = insert(:user)
+      %User{id: id, email: email, cep: cep} = insert(:user)
 
       response =
         conn
@@ -43,7 +43,7 @@ defmodule BananaBankWeb.UsersControllerTest do
         |> json_response(:ok)
 
       expected_response = %{
-        "data" => %{"cep" => "12345678", "email" => email, "id" => id, "name" => "Jane Smith"},
+        "data" => %{"cep" => cep, "email" => email, "id" => id, "name" => "Jane Smith"},
         "message" => "User deleted"
       }
 
