@@ -7,5 +7,4 @@ defmodule BananaBank.Users.Create do
     |> User.changeset()
     |> Repo.insert()
   end
-
 end

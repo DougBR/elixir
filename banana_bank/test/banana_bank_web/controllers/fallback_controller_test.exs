@@ -1,0 +1,2 @@
+defmodule BananaBankWeb.FallbackControllerTest do
+end
