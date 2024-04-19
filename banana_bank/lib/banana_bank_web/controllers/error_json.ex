@@ -20,6 +20,13 @@ defmodule BananaBankWeb.ErrorJSON do
     }
   end
 
+  def error(%{status: :bad_request}) do
+    %{
+      status: :bad_request,
+      message: "Please check your params"
+    }
+  end
+
   def error(%{changeset: changeset}) do
     %{errors: Ecto.Changeset.traverse_errors(changeset, &translate_errors/1)}
   end
