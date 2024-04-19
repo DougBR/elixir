@@ -20,10 +20,10 @@ defmodule BananaBankWeb.ErrorJSON do
     }
   end
 
-  def error(%{status: :bad_request}) do
+  def error(%{status: status}) do
     %{
-      status: :bad_request,
-      message: "Please check your params"
+      status: status,
+      message: "Something went wrong"
     }
   end
 
