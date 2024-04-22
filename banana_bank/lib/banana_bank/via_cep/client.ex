@@ -5,6 +5,7 @@ defmodule BananaBank.ViaCep.Client do
   @default_url "https://viacep.com.br/ws"
   plug Tesla.Middleware.JSON
 
+  @moduledoc false
   @behaviour ClientBehaviour
 
   @impl ClientBehaviour

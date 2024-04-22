@@ -4,6 +4,8 @@ defmodule BananaBank.Factory do
 
   alias BananaBank.Users.User
 
+  @moduledoc false
+
   def user_factory do
     %User{
       name: "Jane Smith",

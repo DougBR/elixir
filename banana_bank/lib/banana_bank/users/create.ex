@@ -3,6 +3,8 @@ defmodule BananaBank.Users.Create do
   alias BananaBank.Users.User
   alias BananaBank.Repo
 
+  @moduledoc false
+
   def call(%{"cep" => cep} = params) do
     with {:ok, _result} <- client().call(cep) do
       params

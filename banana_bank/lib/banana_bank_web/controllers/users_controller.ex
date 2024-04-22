@@ -24,8 +24,6 @@ defmodule BananaBankWeb.UsersController do
 
   def index(conn, _params) do
     with {:ok, users} <- Users.list() do
-      IO.inspect(users)
-
       conn
       |> put_status(:ok)
       |> render(:list, users: users)

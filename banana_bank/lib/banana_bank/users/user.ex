@@ -5,6 +5,7 @@ defmodule BananaBank.Users.User do
 
   alias Ecto.Changeset
 
+  @moduledoc false
   @required_params [:name, :password, :email, :cep]
   @required_params_update [:name, :email, :cep]
 

@@ -5,6 +5,8 @@ defmodule BananaBank.Users do
   alias BananaBank.Users.Get
   alias BananaBank.Users.Update
 
+  @moduledoc false
+
   defdelegate create(params), to: Create, as: :call
   defdelegate delete(id), to: Delete, as: :call
   defdelegate list(), to: List, as: :call
