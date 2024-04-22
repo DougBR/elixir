@@ -12,4 +12,19 @@ defmodule BananaBank.Factory do
       cep: "39816000"
     }
   end
+
+  def cep_factory() do
+    %{
+      "cep" => "39816000",
+      "logradouro" => "",
+      "complemento" => "",
+      "bairro" => "",
+      "localidade" => "Catuji",
+      "uf" => "MG",
+      "ibge" => "3115458",
+      "gia" => "",
+      "ddd" => "33",
+      "siafi" => "2653"
+    }
+  end
 end

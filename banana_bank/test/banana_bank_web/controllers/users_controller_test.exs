@@ -1,12 +1,18 @@
 defmodule BananaBankWeb.UsersControllerTest do
-  alias BananaBank.Users.User
   use BananaBankWeb.ConnCase
 
+  import Mox
   import BananaBank.Factory
+
+  alias BananaBank.Users.User
 
   describe "create/2" do
     test "successfully creates a user", %{conn: conn} do
       %User{cep: cep, email: email, name: name, password: password} = build(:user)
+
+      body = build(:cep)
+
+      expect(BananaBank.ViaCep.ClientMock, :call, fn _cep -> {:ok, body} end)
 
       response =
         conn
@@ -22,6 +28,10 @@ defmodule BananaBankWeb.UsersControllerTest do
     test "when there are missing params, returns an error", %{conn: conn} do
       %User{cep: cep, email: email, name: name} = insert(:user)
 
+      body = build(:cep)
+
+      expect(BananaBank.ViaCep.ClientMock, :call, fn _cep -> {:ok, body} end)
+
       response =
         conn
         |> post(~p"/api/users/", %{"cep" => cep, "email" => email, "name" => name})
@@ -30,6 +40,34 @@ defmodule BananaBankWeb.UsersControllerTest do
       assert %{
                "errors" => %{"password" => ["can't be blank"]}
              } == response
+    end
+
+    test "when CEP is not found, returns an error", %{conn: conn} do
+      %User{email: email, name: name} = insert(:user)
+      cep = 39_816_000
+
+      expect(BananaBank.ViaCep.ClientMock, :call, fn _cep -> {:error, :bad_request} end)
+
+      response =
+        conn
+        |> post(~p"/api/users/", %{"cep" => cep, "email" => email, "password" => "pass", "name" => name})
+        |> json_response(:bad_request)
+
+      assert %{"message" => "Something went wrong", "status" => "bad_request"} == response
+    end
+
+    test "when CEP is invalid, returns an error", %{conn: conn} do
+      cep = "12"
+      params = %{"cep" => cep, "email" => "aderf@gjao.com", "name" => "Jabraulino", "password" => "pass"}
+
+      expect(BananaBank.ViaCep.ClientMock, :call, fn _cep -> {:ok, ""} end)
+
+      response =
+        conn
+        |> post(~p"/api/users/", params)
+        |> json_response(:bad_request)
+
+      assert %{"errors" => %{"cep" => ["should be 8 character(s)"]}} == response
     end
   end
 
